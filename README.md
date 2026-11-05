@@ -57,3 +57,22 @@ Third run (2026-11-05, after the latest changes): BT-04 now takes the larger p o
 Real-data results (self-review): FinancePy Heston is green on 7/7 tests; riskhub-engine historical VaR has one amber, BT-04 (p = 0.021 Gaussian null, 0.033 Student-t(4) null), listed as a finding but not corroborated, so the opinion stays "fit for use within the stated conditions".
 
 Limits: defects are written by the author (not blind), pricing defects are large relative to the tolerances, 12 seeds give wide intervals, and the Z2 null only covers two tail shapes (an amber BT-04 may still come from a third).
+
+## Blind run 1 (`blind/`, 8 models written by sub-agents)
+
+Protocol: eight independent Claude sub-agents each drew at random (with `secrets`) whether to write a healthy or a defective 99 % / 500-day VaR/ES model, chose the defect family and difficulty themselves, and wrote a sealed `answer.json`. The author of the toolkit did not read any model or key before the run. SHA-256 of every file were committed first (`blind/HASHES.txt`, commit `7d8c2cf`), then `blind/run_blind.py` ran the unchanged battery (thresholds `thresholds-v1`) on the real multi-asset portfolio. The keys were read afterwards and the hashes verified.
+
+| | Truth | Opinion of the battery |
+|---|---|---|
+| B01, B04, B07, B08 | healthy | **not fit for use** (4/4 false alarms) |
+| B02 (ES on a 250-day sub-window, subtle) | defective | not fit for use |
+| B03 (95 % level instead of 99 %, obvious) | defective | not fit for use |
+| B05 (ES drops the worst loss, subtle) | defective | not fit for use |
+| B06 (250-day instead of 500-day window, moderate) | defective | not fit for use |
+
+Detection 4/4, but **specificity 0/4**: the battery rejects everything, so this run does not show it discriminates. Causes, diagnosed after the run:
+- BM-02 compares the VaR with `numpy.quantile(..., method="inverted_cdf")` at a 1e-3 tolerance. The healthy models use the other standard convention (linear interpolation, gap to numpy 5e-16), which differs by up to 6 % on a 5-point tail, so BM-02 is red for any correct model that does not copy the author's convention.
+- BT-04 is red (p = 0.006) for the healthy models, amber (p = 0.033) for riskhub's own: on this heavy-tailed portfolio a 500-day historical ES is genuinely light, and the ES definitions differ slightly.
+- The earlier "healthy VaR flagged 4/40" figure was circular: the healthy model there was the benchmark's own implementation.
+
+Next: fix BM-02 to accept either convention, re-examine BT-04, tag the result as `thresholds-v2`, and test it on a fresh set of blind models (the eight above are now burned: their keys have been read). Run-1 results stay published as they are.

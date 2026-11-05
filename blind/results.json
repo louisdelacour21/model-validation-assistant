@@ -1,0 +1,90 @@
+{
+ "B01": {
+  "opinion": "not fit for use",
+  "status": {
+   "BT-01": "green",
+   "BT-02": "green",
+   "BT-03": "green",
+   "BT-04": "red",
+   "BM-02": "red",
+   "BM-03": "green"
+  }
+ },
+ "B02": {
+  "opinion": "not fit for use",
+  "status": {
+   "BT-01": "green",
+   "BT-02": "green",
+   "BT-03": "green",
+   "BT-04": "red",
+   "BM-02": "red",
+   "BM-03": "red"
+  }
+ },
+ "B03": {
+  "opinion": "not fit for use",
+  "status": {
+   "BT-01": "red",
+   "BT-02": "green",
+   "BT-03": "red",
+   "BT-04": "red",
+   "BM-02": "red",
+   "BM-03": "red"
+  }
+ },
+ "B04": {
+  "opinion": "not fit for use",
+  "status": {
+   "BT-01": "green",
+   "BT-02": "green",
+   "BT-03": "green",
+   "BT-04": "red",
+   "BM-02": "red",
+   "BM-03": "green"
+  }
+ },
+ "B05": {
+  "opinion": "not fit for use",
+  "status": {
+   "BT-01": "green",
+   "BT-02": "green",
+   "BT-03": "green",
+   "BT-04": "red",
+   "BM-02": "red",
+   "BM-03": "red"
+  }
+ },
+ "B06": {
+  "opinion": "not fit for use",
+  "status": {
+   "BT-01": "green",
+   "BT-02": "green",
+   "BT-03": "green",
+   "BT-04": "red",
+   "BM-02": "red",
+   "BM-03": "red"
+  }
+ },
+ "B07": {
+  "opinion": "not fit for use",
+  "status": {
+   "BT-01": "green",
+   "BT-02": "green",
+   "BT-03": "green",
+   "BT-04": "red",
+   "BM-02": "red",
+   "BM-03": "green"
+  }
+ },
+ "B08": {
+  "opinion": "not fit for use",
+  "status": {
+   "BT-01": "green",
+   "BT-02": "green",
+   "BT-03": "green",
+   "BT-04": "red",
+   "BM-02": "red",
+   "BM-03": "green"
+  }
+ }
+}
