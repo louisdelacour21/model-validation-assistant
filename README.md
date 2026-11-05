@@ -4,7 +4,7 @@ Python toolkit that runs a battery of validation tests on a pricing or risk mode
 
 **Limits, up front:** the defects in the bench are written by the author (not blind); both campaigns are self-reviews (author = developer), not independent validations; some rules were changed after seeing results (see the bench section) before any `thresholds-v1` tag existed. To validate your own model, see [ADAPTING.md](ADAPTING.md).
 
-**Status: v0.1, steps 1–7 of the plan** (VaR and pricing checks, findings/opinion/`guard`, public planted-defect bench, HTML report, YAML registry). Not done: third-party blind defects (protocol in `defects/README.md`), expert-written commentary, the `thresholds-v1` tag on GitHub. Published reports live in `docs/` (GitHub Pages); thresholds are listed in `THRESHOLDS.md`.
+**Status: v0.1, steps 1–8 of the plan** (VaR and pricing checks, findings/opinion/`guard`, public planted-defect bench, HTML report, YAML registry). Done: three blind sub-agent waves (below). Not done: defects written by a human third party (protocol in `defects/README.md`), expert-written commentary. Published reports live in `docs/` (GitHub Pages); thresholds are listed in `THRESHOLDS.md`.
 
 ```bash
 pip install -e ".[dev,pricing]"
@@ -96,3 +96,19 @@ Same protocol with eight new sub-agents. This time only the hashes and `model.py
 - On the real portfolio both healthy models are still "not fit for use", the BT-04 effect from run 1. A real 500-day historical ES is light on this data, so the real-data opinion cannot separate healthy from defective models here.
 - Post-hoc check, not part of the pre-registered run (portfolios chosen after seeing the results, four models only): on a 60/40 S&P 500 / TLT portfolio the two healthy models are "fit for use within the stated conditions" while B10 and B15 are "not fit"; on the S&P 500 alone BT-04 is red for the healthy models too. The real-data false alarm therefore depends on the tail and clustering of the portfolio, not on the models.
 - Only two healthy models, so the specificity estimate is weak. Models are not independent of the author's model family: every sub-agent chose historical simulation.
+
+## Blind pricing run (`blind/pricing/P01`–`P06`, thresholds `thresholds-v2`)
+
+Six sub-agents each wrote an independent Heston call pricer (numpy/scipy only) after a random draw healthy / defective. Hashes and `model.py` were committed before the run (`3bc3fda`), the full six-test pricing battery ran, then the keys were read and the hashes verified.
+
+| Model | Truth | Battery as run | With fixed-strike spot bump |
+|---|---|---|---|
+| P01, P02 | healthy | not fit (SE-01 red) | **fit** (all green) |
+| P03 | defective (obvious) | not fit | not fit (BM-01, SE-01, LU-01) |
+| P04 | defective (subtle) | not fit | not fit (BM-01 red) |
+| P05, P06 | defective | not fit | not fit (BM-01, SE-01, LU-01) |
+
+- Defect detection is 4/4 under both readings.
+- The first column is the unchanged battery, and it also rejected both healthy models. Cause: my brief did not say the strike stays fixed when the spot is bumped, so the authors re-derived the strike from the bumped spot and the finite-difference delta came out wrong (about 0.18 vs 0.76). SE-01 flagged that correctly; the flaw is in the brief, not the pricing.
+- The second column is a post-hoc re-run through a thin wrapper that keeps the strike fixed (`k' = k + ln(100/spot)`), chosen after seeing the first column (`blind/pricing/run_fixed_strike.py`). Report both: specificity is 0/2 false alarms only under the corrected reading.
+- Caveats: only two healthy models, all authors are the same model family and picked similar Lewis / Gil-Pelaez integrals, so the specificity estimate is weak.
