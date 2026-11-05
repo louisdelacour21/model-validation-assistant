@@ -1,0 +1,205 @@
+{
+ "pricing": {
+  "PD-01 rho sign flipped": {
+   "flagged": 12,
+   "flagged_ci95": [
+    0.7574992425007574,
+    1.0
+   ],
+   "n": 12,
+   "rejected": 12,
+   "rejected_ci95": [
+    0.7574992425007574,
+    1.0
+   ]
+  },
+  "PD-02 v0 +30 %": {
+   "flagged": 12,
+   "flagged_ci95": [
+    0.7574992425007574,
+    1.0
+   ],
+   "n": 12,
+   "rejected": 12,
+   "rejected_ci95": [
+    0.7574992425007574,
+    1.0
+   ]
+  },
+  "PD-03 v0 +5 %": {
+   "flagged": 12,
+   "flagged_ci95": [
+    0.7574992425007574,
+    1.0
+   ],
+   "n": 12,
+   "rejected": 12,
+   "rejected_ci95": [
+    0.7574992425007574,
+    1.0
+   ]
+  },
+  "PD-04 kappa x1.5": {
+   "flagged": 12,
+   "flagged_ci95": [
+    0.7574992425007574,
+    1.0
+   ],
+   "n": 12,
+   "rejected": 12,
+   "rejected_ci95": [
+    0.7574992425007574,
+    1.0
+   ]
+  },
+  "PD-05 vol of vol +10 %": {
+   "flagged": 12,
+   "flagged_ci95": [
+    0.7574992425007574,
+    1.0
+   ],
+   "n": 12,
+   "rejected": 12,
+   "rejected_ci95": [
+    0.7574992425007574,
+    1.0
+   ]
+  },
+  "PD-06 ACT/360 maturity": {
+   "flagged": 12,
+   "flagged_ci95": [
+    0.7574992425007574,
+    1.0
+   ],
+   "n": 12,
+   "rejected": 12,
+   "rejected_ci95": [
+    0.7574992425007574,
+    1.0
+   ]
+  },
+  "PD-07 strike shifted by 1 %": {
+   "flagged": 12,
+   "flagged_ci95": [
+    0.7574992425007574,
+    1.0
+   ],
+   "n": 12,
+   "rejected": 12,
+   "rejected_ci95": [
+    0.7574992425007574,
+    1.0
+   ]
+  },
+  "healthy": {
+   "flagged": 0,
+   "flagged_ci95": [
+    0.0,
+    0.2425007574992425
+   ],
+   "n": 12,
+   "rejected": 0,
+   "rejected_ci95": [
+    0.0,
+    0.2425007574992425
+   ]
+  }
+ },
+ "var": {
+  "VD-01 understated x0.70": {
+   "flagged": 40,
+   "flagged_ci95": [
+    0.9123754607496077,
+    1.0
+   ],
+   "n": 40,
+   "rejected": 40,
+   "rejected_ci95": [
+    0.9123754607496077,
+    1.0
+   ]
+  },
+  "VD-02 understated x0.85": {
+   "flagged": 40,
+   "flagged_ci95": [
+    0.9123754607496077,
+    1.0
+   ],
+   "n": 40,
+   "rejected": 40,
+   "rejected_ci95": [
+    0.9123754607496077,
+    1.0
+   ]
+  },
+  "VD-03 confidence 95 % declared 99 %": {
+   "flagged": 40,
+   "flagged_ci95": [
+    0.9123754607496077,
+    1.0
+   ],
+   "n": 40,
+   "rejected": 40,
+   "rejected_ci95": [
+    0.9123754607496077,
+    1.0
+   ]
+  },
+  "VD-04 frozen VaR": {
+   "flagged": 40,
+   "flagged_ci95": [
+    0.9123754607496077,
+    1.0
+   ],
+   "n": 40,
+   "rejected": 40,
+   "rejected_ci95": [
+    0.9123754607496077,
+    1.0
+   ]
+  },
+  "VD-05 ES equals VaR": {
+   "flagged": 40,
+   "flagged_ci95": [
+    0.9123754607496077,
+    1.0
+   ],
+   "n": 40,
+   "rejected": 40,
+   "rejected_ci95": [
+    0.9123754607496077,
+    1.0
+   ]
+  },
+  "VD-06 50-day window": {
+   "flagged": 40,
+   "flagged_ci95": [
+    0.9123754607496077,
+    1.0
+   ],
+   "n": 40,
+   "rejected": 40,
+   "rejected_ci95": [
+    0.9123754607496077,
+    1.0
+   ]
+  },
+  "healthy": {
+   "flagged": 4,
+   "flagged_ci95": [
+    0.03957888759557486,
+    0.23052074380473897
+   ],
+   "n": 40,
+   "rejected": 0,
+   "rejected_ci95": [
+    -6.938893903907228e-18,
+    0.08762453925039232
+   ]
+  }
+ },
+ "variant": {
+  "pricing_healthy": "FinancePy on fresh Sobol seeds",
+  "var_healthy": "riskhub-historical on iid t4 data"
+ }
+}

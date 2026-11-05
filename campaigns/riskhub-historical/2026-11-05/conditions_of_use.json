@@ -1,0 +1,7 @@
+{
+ "model": "riskhub-historical",
+ "open_findings": [
+  "BT-04"
+ ],
+ "opinion": "fit for use within the stated conditions"
+}

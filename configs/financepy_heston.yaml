@@ -1,0 +1,3 @@
+model: financepy-heston
+# Optional `usage_box`: the parameter ranges a desk really uses, to run DR-01 against the declared domain.
+# Left out here on purpose: no real usage data exists, and an invented box would only produce a fake red.

@@ -1,0 +1,8 @@
+model: riskhub-historical
+params: {conf: 0.99, window: 500}
+data:
+  name: multi_asset
+  start: "2006-01-01"
+  end: "2026-10-31"
+  tickers: ["^GSPC", "TLT", "GLD", "EURUSD=X", "BTC-USD"]
+  weights: {"^GSPC": 0.4, "TLT": 0.25, "GLD": 0.15, "EURUSD=X": 0.1, "BTC-USD": 0.1}

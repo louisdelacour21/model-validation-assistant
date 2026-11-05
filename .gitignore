@@ -1,0 +1,6 @@
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.hypothesis/
+# Yahoo data is not redistributable: only scripts and SHA-256 fingerprints are published
+data/*.csv

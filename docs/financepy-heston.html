@@ -1,0 +1,138 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>financepy-heston validation report</title>
+<style>
+:root{--bg:#fff;--fg:#1c2330;--mut:#5d6778;--line:#d9dee7;--green:#1b7f4b;--amber:#a86a00;--red:#b3261e;--card:#f5f7fa}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#12161d;--fg:#e6e9ef;--mut:#9aa4b5;--line:#2c3442;--green:#4cc38a;--amber:#e0a43b;--red:#ff7b72;--card:#1a2029}}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,sans-serif}
+main{max-width:920px;margin:0 auto;padding:24px 16px}
+h1{font-size:1.5rem;margin:0 0 4px}h2{font-size:1.1rem;margin:28px 0 8px}.mut{color:var(--mut)}
+.banner{padding:14px 16px;border-radius:8px;background:var(--card);border-left:6px solid var(--c);margin:16px 0}
+.banner b{font-size:1.15rem}
+table{border-collapse:collapse;width:100%;font-size:.9rem}th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.s{font-weight:600}.green{color:var(--green)}.amber{color:var(--amber)}.red{color:var(--red)}
+details{margin:6px 0}pre{background:var(--card);padding:10px;overflow:auto;font-size:.8rem;border-radius:6px}
+@media print{details{display:block}details>summary{display:none}}
+</style></head><body><main>
+<h1>financepy-heston — validation report</h1>
+<div class="mut">Campaign 2026-11-05 · independent</div>
+<div class="banner" style="--c:var(--green)"><b>Opinion: fit for use within the stated conditions.</b><br>
+7 of 7 tests green · 0 finding(s) open.</div>
+
+<h2>Findings</h2>
+<p>No test is amber or red.</p>
+
+<h2>Conditions of use</h2>
+<p>Validated domain (the guard refuses inputs outside it):</p>
+<table><tr><th>days</th><th>k</th><th>kappa</th><th>rho</th><th>sigma</th><th>theta</th><th>v0</th></tr><tr><td>[30, 730]</td><td>[-0.3, 0.3]</td><td>[0.5, 4.0]</td><td>[-0.9, -0.1]</td><td>[0.1, 0.8]</td><td>[0.01, 0.1]</td><td>[0.01, 0.1]</td></tr></table>
+<p class="mut">Largest scaled box tested within tolerance: 2.0× the declared domain.</p>
+
+
+<h2>Defect bench (detection power of this battery)</h2>
+<table><tr><th>Case</th><th>Flagged</th><th>Rejected</th></tr>
+<tr><td>PD-01 rho sign flipped</td><td>12/12 (CI 76–100 %)</td><td>12/12</td></tr><tr><td>PD-02 v0 +30 %</td><td>12/12 (CI 76–100 %)</td><td>12/12</td></tr><tr><td>PD-03 v0 +5 %</td><td>12/12 (CI 76–100 %)</td><td>12/12</td></tr><tr><td>PD-04 kappa x1.5</td><td>12/12 (CI 76–100 %)</td><td>12/12</td></tr><tr><td>PD-05 vol of vol +10 %</td><td>12/12 (CI 76–100 %)</td><td>12/12</td></tr><tr><td>PD-06 ACT/360 maturity</td><td>12/12 (CI 76–100 %)</td><td>12/12</td></tr><tr><td>PD-07 strike shifted by 1 %</td><td>12/12 (CI 76–100 %)</td><td>12/12</td></tr><tr><td>healthy</td><td>0/12 (CI 0–24 %)</td><td>0/12</td></tr></table>
+
+<h2>Tests</h2>
+<table><tr><th>ID</th><th>Test</th><th>Value</th><th>Status</th><th>Thresholds (fixed beforehand)</th><th>Power</th></tr>
+<tr><td>BM-01</td><td>IV error vs QuantLib analytic + MC QE (bp)</td><td>0.01145</td><td class="s green">green</td><td>{&#39;green&#39;: &#39;mean&lt;1 and p99&lt;10&#39;, &#39;amber&#39;: &#39;mean&lt;3 and p99&lt;25&#39;}</td><td>–</td></tr><tr><td>CV-01</td><td>MC standard-error slope vs paths</td><td>-0.5002</td><td class="s green">green</td><td>{&#39;green&#39;: &#39;[-0.6,-0.4]&#39;, &#39;amber&#39;: &#39;[-0.7,-0.3]&#39;}</td><td>–</td></tr><tr><td>SE-01</td><td>Delta (central FD) vs QuantLib</td><td>4.495e-09</td><td class="s green">green</td><td>{&#39;green_lt&#39;: 0.01, &#39;amber_lt&#39;: 0.05}</td><td>–</td></tr><tr><td>ST-01</td><td>Stress of parameters</td><td>0</td><td class="s green">green</td><td>{&#39;green&#39;: &#39;0 violation inside the domain&#39;}</td><td>–</td></tr><tr><td>LU-01</td><td>Largest scaled box with p99 IV error under tolerance</td><td>2</td><td class="s green">green</td><td>{&#39;green&#39;: &#39;declared domain (scale 1) within tolerance&#39;, &#39;tol_p99_bp&#39;: 10}</td><td>–</td></tr><tr><td>DR-01</td><td>Input drift vs declared domain (PSI)</td><td>0.004267</td><td class="s green">green</td><td>{&#39;green_lt&#39;: 0.1, &#39;amber_lt&#39;: 0.25}</td><td>–</td></tr><tr><td>RP-01</td><td>Two runs give identical facts</td><td>1</td><td class="s green">green</td><td>{&#39;identical&#39;: True}</td><td>–</td></tr></table>
+
+<h2>Evidence</h2>
+<details><summary>BM-01 — IV error vs QuantLib analytic + MC QE (bp)</summary><pre>{
+ &#34;excluded_not_invertible&#34;: 0,
+ &#34;max_bp&#34;: 1.4659947120843064,
+ &#34;mc_paths&#34;: 100000,
+ &#34;mc_points&#34;: 16,
+ &#34;mean_bp&#34;: 0.01145447418261867,
+ &#34;outside_mc_ci99&#34;: 0,
+ &#34;p99_bp&#34;: 8.627267242822278e-05,
+ &#34;points&#34;: 128,
+ &#34;worst_point&#34;: {
+  &#34;days&#34;: 53,
+  &#34;k&#34;: 0.20147102884948248,
+  &#34;kappa&#34;: 2.291875097900629,
+  &#34;rho&#34;: -0.7818242162466049,
+  &#34;sigma&#34;: 0.15873408690094948,
+  &#34;theta&#34;: 0.02668861798942089,
+  &#34;v0&#34;: 0.013513222159817815
+ }
+}</pre></details><details><summary>CV-01 — MC standard-error slope vs paths</summary><pre>{
+ &#34;paths&#34;: [
+  4000,
+  16000,
+  64000,
+  256000
+ ],
+ &#34;se&#34;: [
+  0.09312227197536649,
+  0.046852064842536206,
+  0.023206440560037973,
+  0.01166374282271159
+ ]
+}</pre></details><details><summary>SE-01 — Delta (central FD) vs QuantLib</summary><pre>{
+ &#34;max_rel_err_by_bump&#34;: {
+  &#34;0.001&#34;: 4.494882270003743e-09,
+  &#34;0.01&#34;: 2.5750581249712135e-09
+ },
+ &#34;points&#34;: 32
+}</pre></details><details><summary>ST-01 — Stress of parameters</summary><pre>{
+ &#34;cases&#34;: {
+  &#34;feller_violated&#34;: {
+   &#34;finite_and_in_bounds&#34;: true,
+   &#34;in_domain&#34;: false,
+   &#34;iv_err_bp&#34;: 1.7881945924003162e-07
+  },
+  &#34;one_week&#34;: {
+   &#34;finite_and_in_bounds&#34;: true,
+   &#34;in_domain&#34;: false,
+   &#34;iv_err_bp&#34;: 3.241851231905457e-10
+  },
+  &#34;rho_minus_0.95&#34;: {
+   &#34;finite_and_in_bounds&#34;: true,
+   &#34;in_domain&#34;: false,
+   &#34;iv_err_bp&#34;: 2.7226831900151183e-08
+  },
+  &#34;rho_plus_0.95&#34;: {
+   &#34;finite_and_in_bounds&#34;: true,
+   &#34;in_domain&#34;: false,
+   &#34;iv_err_bp&#34;: 2.5550395132967196e-08
+  },
+  &#34;wing_down&#34;: {
+   &#34;finite_and_in_bounds&#34;: true,
+   &#34;in_domain&#34;: false,
+   &#34;iv_err_bp&#34;: 5.800915303666443e-10
+  },
+  &#34;wing_up&#34;: {
+   &#34;finite_and_in_bounds&#34;: true,
+   &#34;in_domain&#34;: false,
+   &#34;iv_err_bp&#34;: 1.1310397063368782e-09
+  }
+ },
+ &#34;violations&#34;: []
+}</pre></details><details><summary>LU-01 — Largest scaled box with p99 IV error under tolerance</summary><pre>{
+ &#34;p99_bp_by_scale&#34;: {
+  &#34;0.5&#34;: 6.538665164867973e-08,
+  &#34;1.0&#34;: 1.8256823275386557e-06,
+  &#34;1.5&#34;: 0.0006828778167128316,
+  &#34;2.0&#34;: 0.006509466605614205
+ },
+ &#34;validated_scale&#34;: 2.0
+}</pre></details><details><summary>DR-01 — Input drift vs declared domain (PSI)</summary><pre>{
+ &#34;ks&#34;: {
+  &#34;days&#34;: 0.009609375,
+  &#34;k&#34;: 0.0096875,
+  &#34;kappa&#34;: 0.00984375,
+  &#34;rho&#34;: 0.0109375,
+  &#34;sigma&#34;: 0.00984375,
+  &#34;theta&#34;: 0.0115625,
+  &#34;v0&#34;: 0.0109375
+ },
+ &#34;psi&#34;: {
+  &#34;days&#34;: 0.00426707919304615,
+  &#34;k&#34;: 0.0028699578568901697,
+  &#34;kappa&#34;: 0.0018660558297983495,
+  &#34;rho&#34;: 0.0016736721111194207,
+  &#34;sigma&#34;: 0.001906204969769085,
+  &#34;theta&#34;: 0.002182568514524302,
+  &#34;v0&#34;: 0.0010595605333903603
+ }
+}</pre></details><details><summary>RP-01 — Two runs give identical facts</summary><pre>{}</pre></details>
+</main></body></html>

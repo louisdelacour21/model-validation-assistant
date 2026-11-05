@@ -1,0 +1,128 @@
+[
+ {
+  "evidence": {
+   "LR": 0.09494012266443264,
+   "N": 250,
+   "exceptions": 3,
+   "expected": 2.500000000000002,
+   "power_vs_2p": 0.241,
+   "size_at_5pct": 0.1
+  },
+  "id": "BT-01",
+  "indicative": true,
+  "name": "Kupiec POF",
+  "power": 0.241,
+  "seed": 20261105,
+  "status": "green",
+  "threshold": {
+   "amber_p": 0.05,
+   "red_p": 0.01
+  },
+  "value": 0.75798832137329
+ },
+ {
+  "evidence": {
+   "LR_cc": 0.1681126681503855,
+   "LR_ind": 0.07317254548595287,
+   "N": 250,
+   "p_cc": 0.9193794622445023,
+   "power_vs_clusters": 0.3795
+  },
+  "id": "BT-02",
+  "indicative": true,
+  "name": "Christoffersen independence / conditional coverage",
+  "power": 0.3795,
+  "seed": 20261105,
+  "status": "green",
+  "threshold": {
+   "amber_p": 0.05,
+   "red_p": 0.01
+  },
+  "value": 0.7867723531107524
+ },
+ {
+  "evidence": {
+   "N": 250,
+   "exceptions": 3,
+   "multiplier_addon": null
+  },
+  "id": "BT-03",
+  "indicative": false,
+  "name": "Basel traffic light",
+  "power": null,
+  "seed": null,
+  "status": "green",
+  "threshold": {
+   "amber_cdf": 0.95,
+   "red_cdf": 0.9999
+  },
+  "value": 0.7581166977648828
+ },
+ {
+  "evidence": {
+   "N": 2548,
+   "Z2": 0.40060825050302906,
+   "exceptions": 29,
+   "null": "Gaussian tail, 5000 draws"
+  },
+  "id": "BT-04",
+  "indicative": false,
+  "name": "Expected shortfall Z2",
+  "power": null,
+  "seed": 20261105,
+  "status": "amber",
+  "threshold": {
+   "amber_p": 0.05,
+   "red_p": 0.01
+  },
+  "value": 0.0212
+ },
+ {
+  "evidence": {
+   "convention": "inverted_cdf",
+   "observation_gap_vs_linear_interp": 0.06664961400977584,
+   "windows": 250
+  },
+  "id": "BM-02",
+  "indicative": false,
+  "name": "VaR vs numpy.quantile",
+  "power": null,
+  "seed": null,
+  "status": "green",
+  "threshold": {
+   "amber_lt": 0.02,
+   "green_lt": 0.001
+  },
+  "value": 0.0
+ },
+ {
+  "evidence": {
+   "k": 5,
+   "windows": 250
+  },
+  "id": "BM-03",
+  "indicative": false,
+  "name": "ES vs mean of k worst returns",
+  "power": null,
+  "seed": null,
+  "status": "green",
+  "threshold": {
+   "amber_lt": 0.02,
+   "green_lt": 0.001
+  },
+  "value": 1.5845173795695266e-16
+ },
+ {
+  "evidence": {},
+  "id": "RP-01",
+  "indicative": false,
+  "name": "Two runs give identical facts",
+  "power": null,
+  "seed": null,
+  "status": "green",
+  "threshold": {
+   "identical": true
+  },
+  "value": 1.0
+ }
+]
