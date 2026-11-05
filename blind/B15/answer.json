@@ -1,0 +1,1 @@
+{"id":"B15","defective":true,"family":"ES tail slice off-by-one","difficulty":"subtle","description":"Historical-simulation ES averages the sorted losses from index 1 to k instead of 0 to k-1, so it drops the single worst loss and includes one observation just past the tail. ES is biased low, by a small amount that depends on tail heaviness."}

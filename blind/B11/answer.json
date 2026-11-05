@@ -1,0 +1,1 @@
+{"id":"B11","defective":false,"family":"none","difficulty":"none","description":"Correct historical simulation: empirical 99% quantile of losses over the 500-day window for VaR, and mean of losses at or beyond VaR for ES."}

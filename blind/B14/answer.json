@@ -1,0 +1,1 @@
+{"id":"B14","defective":true,"family":"confidence mismatch","difficulty":"obvious","description":"The historical-simulation quantile is taken at 95 % instead of the declared 99 %, so VaR and ES are computed on a much fatter tail and are far too low (about 2/3 of the true 99 % VaR for normal-like data), producing heavy exceedance excess."}

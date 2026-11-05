@@ -1,0 +1,1 @@
+{"id":"B10","defective":true,"family":"confidence mismatch","difficulty":"obvious","description":"Historical simulation uses the 95% empirical quantile of losses instead of the declared 99%, so VaR and ES (tail mean beyond that quantile) are both far too low and the 99% VaR is breached about 5% of the time."}

@@ -75,4 +75,20 @@ Detection 4/4, but **specificity 0/4**: the battery rejects everything, so this 
 - BT-04 is red (p = 0.006) for the healthy models, amber (p = 0.033) for riskhub's own: on this heavy-tailed portfolio a 500-day historical ES is genuinely light, and the ES definitions differ slightly.
 - The earlier "healthy VaR flagged 4/40" figure was circular: the healthy model there was the benchmark's own implementation.
 
-Next: fix BM-02 to accept either convention, re-examine BT-04, tag the result as `thresholds-v2`, and test it on a fresh set of blind models (the eight above are now burned: their keys have been read). Run-1 results stay published as they are.
+Changes made after seeing run 1, before run 2 (tag `thresholds-v2`, commit `6480567`): BM-02 accepts the closer of the two quantile conventions. BT-04 is left unchanged, because the red on healthy models comes from the real heavy-tailed data, not from a flaw in the test. The eight run-1 models are burned (their keys were read), so run 2 uses fresh ones.
+
+## Blind run 2 (`blind/B09`–`B16`, thresholds `thresholds-v2`)
+
+Same protocol with eight new sub-agents. This time only the hashes and `model.py` files were committed before the run (commit `261a244`); the keys stayed local until after it. Each model ran on 30 synthetic i.i.d. Student-t(4) series (known truth, 1250 days, seeds 100-129) and on the real portfolio. Hashes verified afterwards.
+
+| Model | Truth | Synthetic: fit / conditions / not fit | Real portfolio |
+|---|---|---|---|
+| B09, B11 | healthy (historical simulation) | 22 / 8 / 0 each | not fit |
+| B10, B13, B14 | 95 % level instead of 99 % (obvious) | 0 / 0 / 30 each | not fit |
+| B12, B16 | ES averaged beyond the 97.5 % quantile (moderate) | 0 / 0 / 30 each | not fit |
+| B15 | ES drops the worst loss (subtle) | 0 / 0 / 30 | not fit |
+
+- Detection: 6/6 defective models rejected on every synthetic series (180/180) and on the real data.
+- Healthy models on known-truth data: 0/60 rejected (Wilson 95 % upper bound about 6 %), 16/60 "fit with conditions", 44/60 fit. The conditions come from isolated ambers, not reds.
+- On the real portfolio both healthy models are still "not fit for use", the BT-04 effect from run 1. A real 500-day historical ES is light on this data, so the real-data opinion cannot separate healthy from defective models here.
+- Only two healthy models, so the specificity estimate is weak. Models are not independent of the author's model family: every sub-agent chose historical simulation.

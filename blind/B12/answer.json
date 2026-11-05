@@ -1,0 +1,1 @@
+{"id":"B12","defective":true,"family":"ES tail-level mismatch","difficulty":"moderate","description":"VaR is the correct 99% historical quantile, but ES averages losses beyond the 97.5% quantile instead of the 99% one, so it is an ES at the wrong confidence level and is understated (can even fall near or below VaR)."}
