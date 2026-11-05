@@ -1,0 +1,1 @@
+{"id":"P03","defective":true,"family":"discount factor","difficulty":"obvious","description":"The discount factor applied to the call payoff uses the dividend yield q instead of the risk-free rate r, so prices are scaled by exp(-qT) rather than exp(-rT)."}

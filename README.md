@@ -4,7 +4,7 @@ Python toolkit that runs a battery of validation tests on a pricing or risk mode
 
 **Limits, up front:** the defects in the bench are written by the author (not blind); both campaigns are self-reviews (author = developer), not independent validations; some rules were changed after seeing results (see the bench section) before any `thresholds-v1` tag existed. To validate your own model, see [ADAPTING.md](ADAPTING.md).
 
-**Status: v0.1, steps 1–7 of the plan** (VaR and pricing checks, findings/opinion/`guard`, public planted-defect bench, HTML report, YAML registry). Not done: third-party blind defects (protocol in `defects/README.md`), expert-written commentary, the `thresholds-v1` tag on GitHub, the demo GIF. Published reports live in `docs/` (GitHub Pages); thresholds are listed in `THRESHOLDS.md`.
+**Status: v0.1, steps 1–7 of the plan** (VaR and pricing checks, findings/opinion/`guard`, public planted-defect bench, HTML report, YAML registry). Not done: third-party blind defects (protocol in `defects/README.md`), expert-written commentary, the `thresholds-v1` tag on GitHub. Published reports live in `docs/` (GitHub Pages); thresholds are listed in `THRESHOLDS.md`.
 
 ```bash
 pip install -e ".[dev,pricing]"
@@ -39,6 +39,9 @@ The riskhub-engine campaign is a **self-review** (author = developer), not an in
 FinancePy and QuantLib's analytic engine both use the characteristic-function family, so their agreement (~1e-8 bp) is weak evidence; the Monte Carlo QE comparison is the only genuinely different method.
 
 Each campaign also writes `report.html` (one-screen summary, then detail; prints to PDF from the browser) and upserts `registry/models.yaml` (pydantic-validated). The VaR campaign is labelled *self-review*.
+
+
+![Scroll through a validation report](docs/demo.gif)
 
 ## Defect bench (`valkit bench`, ~12 min)
 

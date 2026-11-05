@@ -1,0 +1,1 @@
+{"id":"P05","defective":true,"family":"integration truncated too early","difficulty":"subtle","description":"The Fourier integral is cut at u=60 instead of a much larger bound, so short-maturity, high vol-of-vol and near-the-money prices lose accuracy while most of the domain looks fine."}

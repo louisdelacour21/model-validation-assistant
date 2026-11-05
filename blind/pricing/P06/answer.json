@@ -1,0 +1,1 @@
+{"id":"P06","defective":true,"family":"integration truncated too early","difficulty":"moderate","description":"The Gil-Pelaez integrals are cut off at u=40 instead of a large upper bound, so short maturities and far strikes lose accuracy while long maturities are fine."}

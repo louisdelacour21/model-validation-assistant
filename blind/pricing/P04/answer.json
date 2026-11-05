@@ -1,0 +1,1 @@
+{"id":"P04","defective":true,"family":"integration truncation","difficulty":"subtle","description":"Gil-Pelaez integrals are truncated at u=100 instead of effectively infinity; leaves errors of order 1e-3 on short maturities with high vol-of-vol, negligible elsewhere."}
