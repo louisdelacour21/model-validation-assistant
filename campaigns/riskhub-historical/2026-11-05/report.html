@@ -20,7 +20,7 @@ details{margin:6px 0}pre{background:var(--card);padding:10px;overflow:auto;font-
 
 <h2>Findings</h2>
 <table><tr><th>Test</th><th>Severity</th><th>Finding</th><th>Impact</th></tr>
-<tr><td>BT-04</td><td class="s amber">amber</td><td>Expected shortfall Z2: 0.0212 (amber; thresholds {&#39;amber_p&#39;: 0.05, &#39;red_p&#39;: 0.01})</td><td>not quantified in v1</td></tr></table>
+<tr><td>BT-04</td><td class="s amber">amber</td><td>Expected shortfall Z2: 0.0332 (amber; thresholds {&#39;amber_p&#39;: 0.05, &#39;red_p&#39;: 0.01})</td><td>not quantified in v1</td></tr></table>
 
 
 <h2>Conditions of use</h2>
@@ -28,16 +28,17 @@ details{margin:6px 0}pre{background:var(--card);padding:10px;overflow:auto;font-
 
 <h2>Defect bench (detection power of this battery)</h2>
 <table><tr><th>Case</th><th>Flagged</th><th>Rejected</th></tr>
-<tr><td>VD-01 understated x0.70</td><td>40/40 (CI 91–100 %)</td><td>40/40</td></tr><tr><td>VD-02 understated x0.85</td><td>40/40 (CI 91–100 %)</td><td>40/40</td></tr><tr><td>VD-03 confidence 95 % declared 99 %</td><td>40/40 (CI 91–100 %)</td><td>40/40</td></tr><tr><td>VD-04 frozen VaR</td><td>40/40 (CI 91–100 %)</td><td>40/40</td></tr><tr><td>VD-05 ES equals VaR</td><td>40/40 (CI 91–100 %)</td><td>40/40</td></tr><tr><td>VD-06 50-day window</td><td>40/40 (CI 91–100 %)</td><td>40/40</td></tr><tr><td>healthy</td><td>4/40 (CI 4–23 %)</td><td>0/40</td></tr></table>
+<tr><td>VD-01 understated x0.70</td><td>40/40 (CI 91–100 %)</td><td>40/40</td></tr><tr><td>VD-02 understated x0.85</td><td>40/40 (CI 91–100 %)</td><td>40/40</td></tr><tr><td>VD-03 confidence 95 % declared 99 %</td><td>40/40 (CI 91–100 %)</td><td>40/40</td></tr><tr><td>VD-04 frozen VaR</td><td>40/40 (CI 91–100 %)</td><td>40/40</td></tr><tr><td>VD-05 ES equals VaR</td><td>40/40 (CI 91–100 %)</td><td>40/40</td></tr><tr><td>VD-06 50-day window</td><td>40/40 (CI 91–100 %)</td><td>40/40</td></tr><tr><td>VD-07 understated x0.95 (subtle)</td><td>40/40 (CI 91–100 %)</td><td>40/40</td></tr><tr><td>VD-08 20-day window (extreme)</td><td>40/40 (CI 91–100 %)</td><td>40/40</td></tr><tr><td>healthy</td><td>4/40 (CI 4–23 %)</td><td>0/40</td></tr></table>
 
 <h2>Tests</h2>
 <table><tr><th>ID</th><th>Test</th><th>Value</th><th>Status</th><th>Thresholds (fixed beforehand)</th><th>Power</th></tr>
-<tr><td>BT-01</td><td>Kupiec POF</td><td>0.758</td><td class="s green">green</td><td>{&#39;amber_p&#39;: 0.05, &#39;red_p&#39;: 0.01}</td><td>0.24</td></tr><tr><td>BT-02</td><td>Christoffersen independence / conditional coverage</td><td>0.7868</td><td class="s green">green</td><td>{&#39;amber_p&#39;: 0.05, &#39;red_p&#39;: 0.01}</td><td>0.38</td></tr><tr><td>BT-03</td><td>Basel traffic light</td><td>0.7581</td><td class="s green">green</td><td>{&#39;amber_cdf&#39;: 0.95, &#39;red_cdf&#39;: 0.9999}</td><td>–</td></tr><tr><td>BT-04</td><td>Expected shortfall Z2</td><td>0.0212</td><td class="s amber">amber</td><td>{&#39;amber_p&#39;: 0.05, &#39;red_p&#39;: 0.01}</td><td>–</td></tr><tr><td>BM-02</td><td>VaR vs numpy.quantile</td><td>0</td><td class="s green">green</td><td>{&#39;green_lt&#39;: 0.001, &#39;amber_lt&#39;: 0.02}</td><td>–</td></tr><tr><td>BM-03</td><td>ES vs mean of k worst returns</td><td>1.585e-16</td><td class="s green">green</td><td>{&#39;green_lt&#39;: 0.001, &#39;amber_lt&#39;: 0.02}</td><td>–</td></tr><tr><td>RP-01</td><td>Two runs give identical facts</td><td>1</td><td class="s green">green</td><td>{&#39;identical&#39;: True}</td><td>–</td></tr></table>
+<tr><td>BT-01</td><td>Kupiec POF</td><td>0.758</td><td class="s green">green</td><td>{&#39;amber_p&#39;: 0.05, &#39;red_p&#39;: 0.01}</td><td>0.24</td></tr><tr><td>BT-02</td><td>Christoffersen independence / conditional coverage</td><td>0.7868</td><td class="s green">green</td><td>{&#39;amber_p&#39;: 0.05, &#39;red_p&#39;: 0.01}</td><td>0.38</td></tr><tr><td>BT-03</td><td>Basel traffic light</td><td>0.7581</td><td class="s green">green</td><td>{&#39;amber_cdf&#39;: 0.95, &#39;red_cdf&#39;: 0.9999}</td><td>–</td></tr><tr><td>BT-04</td><td>Expected shortfall Z2</td><td>0.0332</td><td class="s amber">amber</td><td>{&#39;amber_p&#39;: 0.05, &#39;red_p&#39;: 0.01}</td><td>–</td></tr><tr><td>BM-02</td><td>VaR vs numpy.quantile</td><td>0</td><td class="s green">green</td><td>{&#39;green_lt&#39;: 0.001, &#39;amber_lt&#39;: 0.02}</td><td>–</td></tr><tr><td>BM-03</td><td>ES vs mean of k worst returns</td><td>1.585e-16</td><td class="s green">green</td><td>{&#39;green_lt&#39;: 0.001, &#39;amber_lt&#39;: 0.02}</td><td>–</td></tr><tr><td>RP-01</td><td>Two runs give identical facts</td><td>1</td><td class="s green">green</td><td>{&#39;identical&#39;: True}</td><td>–</td></tr></table>
 
 <h2>Evidence</h2>
 <details><summary>BT-01 — Kupiec POF</summary><pre>{
  &#34;LR&#34;: 0.09494012266443264,
  &#34;N&#34;: 250,
+ &#34;exact_binomial_p&#34;: 0.9136620533685497,
  &#34;exceptions&#34;: 3,
  &#34;expected&#34;: 2.500000000000002,
  &#34;power_vs_2p&#34;: 0.241,
@@ -56,7 +57,11 @@ details{margin:6px 0}pre{background:var(--card);padding:10px;overflow:auto;font-
  &#34;N&#34;: 2548,
  &#34;Z2&#34;: 0.40060825050302906,
  &#34;exceptions&#34;: 29,
- &#34;null&#34;: &#34;Gaussian tail, 5000 draws&#34;
+ &#34;null&#34;: &#34;max p over Gaussian and Student-t(4) tails, 5000 draws&#34;,
+ &#34;p_by_null&#34;: {
+  &#34;gaussian&#34;: 0.0212,
+  &#34;t4&#34;: 0.0332
+ }
 }</pre></details><details><summary>BM-02 — VaR vs numpy.quantile</summary><pre>{
  &#34;convention&#34;: &#34;inverted_cdf&#34;,
  &#34;observation_gap_vs_linear_interp&#34;: 0.06664961400977584,

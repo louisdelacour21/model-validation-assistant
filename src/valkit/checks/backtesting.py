@@ -2,6 +2,7 @@
 import numpy as np
 from scipy.special import xlogy
 from scipy.stats import binom, chi2, norm
+from scipy.stats import t as t_dist
 
 from ..core import TestResult, p_status
 
@@ -64,8 +65,9 @@ def bt_kupiec(hits, p: float, seed: int = 20261105, n_sims: int = 2000) -> TestR
     lr, pv = kupiec_lr(N, x, p)
     power = rejection_rate(lambda s: kupiec_lr(N, int(s.sum()), p)[1], _iid(N, 2 * p), n_sims, 0.05, seed)
     size = rejection_rate(lambda s: kupiec_lr(N, int(s.sum()), p)[1], _iid(N, p), n_sims, 0.05, seed + 1)
+    exact = float(min(1.0, 2 * min(binom.cdf(x, N, p), binom.sf(x - 1, N, p))))  # two-sided exact, for comparison
     return TestResult("BT-01", "Kupiec POF", pv, p_status(pv), {"amber_p": 0.05, "red_p": 0.01},
-                      power, seed, {"N": N, "exceptions": x, "expected": N * p, "LR": lr,
+                      power, seed, {"N": N, "exceptions": x, "expected": N * p, "LR": lr, "exact_binomial_p": exact,
                                     "power_vs_2p": power, "size_at_5pct": size})
 
 
@@ -73,7 +75,6 @@ def bt_christoffersen(hits, p: float, seed: int = 20261105, n_sims: int = 2000) 
     h = np.asarray(hits, int)
     N = len(h)
     lr_ind, p_ind = christoffersen_lr(h)
-    _, p_pof = kupiec_lr(N, int(h.sum()), p)
     lr_cc = kupiec_lr(N, int(h.sum()), p)[0] + lr_ind
     p_cc = float(chi2.sf(lr_cc, 2))
     power = rejection_rate(lambda s: christoffersen_lr(s)[1], _clustered(N, p), n_sims, 0.05, seed)
@@ -92,13 +93,13 @@ def bt_traffic_light(hits, p: float) -> TestResult:
                       {"N": N, "exceptions": x, "multiplier_addon": addon})
 
 
-def _z2_null(N: int, p: float, n_sims: int, seed: int) -> np.ndarray:
-    # shortcut: Gaussian tail assumed under H0 with 5000 draws, upgrade to the model's own tail law
+def _z2_null(N: int, p: float, n_sims: int, seed: int, df: float | None = None) -> np.ndarray:
+    """Z2 under H0 (ES forecasts correct) for a Gaussian (df=None) or Student-t(df) tail law."""
     rng = np.random.default_rng(seed)
-    z = norm.ppf(1 - p)
-    es_over_sigma = norm.pdf(z) / p
+    law = norm if df is None else t_dist(df)
+    es = law.expect(lambda x: x, lb=law.ppf(1 - p), ub=np.inf) / p  # E[X | X > q_(1-p)]
     k = rng.binomial(N, p, n_sims)
-    return np.array([(norm.ppf(1 - rng.random(ki) * p) / es_over_sigma).sum() / (N * p) - 1 for ki in k])
+    return np.array([(law.ppf(1 - rng.random(ki) * p) / es).sum() / (N * p) - 1 for ki in k])
 
 
 def bt_es(returns, var, es, p: float, seed: int = 20261105, n_sims: int = 5000) -> TestResult:
@@ -107,7 +108,9 @@ def bt_es(returns, var, es, p: float, seed: int = 20261105, n_sims: int = 5000) 
     N = len(r)
     hit = r < -v
     z2 = float((-r[hit] / e[hit]).sum() / (N * p) - 1)
-    pv = float(np.mean(_z2_null(N, p, n_sims, seed) >= z2))
+    # two tail laws for the null; the larger p decides, so a Gaussian-null artefact cannot raise the alarm alone
+    pvs = {name: float(np.mean(_z2_null(N, p, n_sims, seed, df) >= z2)) for name, df in (("gaussian", None), ("t4", 4))}
+    pv = max(pvs.values())
     return TestResult("BT-04", "Expected shortfall Z2", pv, p_status(pv), {"amber_p": 0.05, "red_p": 0.01},
                       None, seed, {"N": N, "Z2": z2, "exceptions": int(hit.sum()),
-                                   "null": "Gaussian tail, %d draws" % n_sims})
+                                   "null": f"max p over Gaussian and Student-t(4) tails, {n_sims} draws", "p_by_null": pvs})

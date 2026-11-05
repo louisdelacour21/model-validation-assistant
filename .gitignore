@@ -4,3 +4,4 @@ __pycache__/
 .hypothesis/
 # Yahoo data is not redistributable: only scripts and SHA-256 fingerprints are published
 data/*.csv
+.coverage

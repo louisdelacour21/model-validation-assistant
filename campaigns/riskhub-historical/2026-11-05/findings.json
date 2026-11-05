@@ -3,7 +3,7 @@
   "impact": "not quantified in v1",
   "indicative": false,
   "severity": "amber",
-  "summary": "Expected shortfall Z2: 0.0212 (amber; thresholds {'amber_p': 0.05, 'red_p': 0.01})",
+  "summary": "Expected shortfall Z2: 0.0332 (amber; thresholds {'amber_p': 0.05, 'red_p': 0.01})",
   "test_id": "BT-04"
  }
 ]

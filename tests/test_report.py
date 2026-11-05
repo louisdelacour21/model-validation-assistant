@@ -14,8 +14,9 @@ def test_report_renders_and_escapes(tmp_path):
 
 
 def test_registry_upserts(tmp_path):
-    e = dict(name="m", kind="var", independence="self-review", opinion="o", campaign_date="d", campaign_dir="c",
-             open_findings=[])
+    e = {"name": "m", "kind": "var", "independence": "self-review", "opinion": "o",
+             "campaign_date": "d", "campaign_dir": "c",
+             "open_findings": []}
     p = tmp_path / "m.yaml"
     update_registry(p, Entry(**e))
     update_registry(p, Entry(**e | {"opinion": "o2"}))

@@ -12,7 +12,7 @@ Honest caveat: the defect bench was run and two rules were changed (BM-03 added,
 | BT-01 | Kupiec POF | `{"amber_p": 0.05, "red_p": 0.01}` |
 | BT-02 | Christoffersen independence / conditional coverage | `{"amber_p": 0.05, "red_p": 0.01}` |
 | BT-03 | Basel traffic light | `{"amber_cdf": 0.95, "red_cdf": 0.9999}` |
-| BT-04 | Expected shortfall Z2 | `{"amber_p": 0.05, "red_p": 0.01}` |
+| BT-04 | Expected shortfall Z2 (max p over Gaussian and Student-t(4) nulls) | `{"amber_p": 0.05, "red_p": 0.01}` |
 | CV-01 | MC standard-error slope vs paths | `{"amber": "[-0.7,-0.3]", "green": "[-0.6,-0.4]"}` |
 | DR-01 | Input drift vs declared domain (PSI) | `{"amber_lt": 0.25, "green_lt": 0.1}` |
 | LU-01 | Largest scaled box with p99 IV error under tolerance | `{"green": "declared domain (scale 1) within tolerance", "tol_p99_bp": 10}` |

@@ -91,6 +91,32 @@
     1.0
    ]
   },
+  "PD-08 v0 +1 % (subtle)": {
+   "flagged": 12,
+   "flagged_ci95": [
+    0.7574992425007574,
+    1.0
+   ],
+   "n": 12,
+   "rejected": 12,
+   "rejected_ci95": [
+    0.7574992425007574,
+    1.0
+   ]
+  },
+  "PD-09 kappa +10 % (subtle)": {
+   "flagged": 12,
+   "flagged_ci95": [
+    0.7574992425007574,
+    1.0
+   ],
+   "n": 12,
+   "rejected": 12,
+   "rejected_ci95": [
+    0.7574992425007574,
+    1.0
+   ]
+  },
   "healthy": {
    "flagged": 0,
    "flagged_ci95": [
@@ -172,6 +198,32 @@
    ]
   },
   "VD-06 50-day window": {
+   "flagged": 40,
+   "flagged_ci95": [
+    0.9123754607496077,
+    1.0
+   ],
+   "n": 40,
+   "rejected": 40,
+   "rejected_ci95": [
+    0.9123754607496077,
+    1.0
+   ]
+  },
+  "VD-07 understated x0.95 (subtle)": {
+   "flagged": 40,
+   "flagged_ci95": [
+    0.9123754607496077,
+    1.0
+   ],
+   "n": 40,
+   "rejected": 40,
+   "rejected_ci95": [
+    0.9123754607496077,
+    1.0
+   ]
+  },
+  "VD-08 20-day window (extreme)": {
    "flagged": 40,
    "flagged_ci95": [
     0.9123754607496077,

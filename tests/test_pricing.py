@@ -1,7 +1,14 @@
 import numpy as np
 import pytest
 
-from valkit.adapters.pricing import DOMAIN, FinancePyHeston, implied_vol, ql_analytic, ql_mc_qe, sobol_points
+from valkit.adapters.pricing import (
+    DOMAIN,
+    FinancePyHeston,
+    implied_vol,
+    ql_analytic,
+    ql_mc_qe,
+    sobol_points,
+)
 from valkit.checks import pricing as pc
 
 
@@ -9,6 +16,7 @@ def test_implied_vol_round_trip():
     p = sobol_points(1)[0]
     # price a call with Black at 25 % vol, invert it
     from scipy.stats import norm
+
     from valkit.adapters.pricing import MKT, forward, strike
     F, K, T, s = forward(p), strike(p), p["days"] / 365, 0.25
     d1 = (np.log(F / K) + 0.5 * s * s * T) / (s * np.sqrt(T))

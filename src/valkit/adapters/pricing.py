@@ -90,6 +90,6 @@ def sobol_points(n: int, box: dict | None = None, seed: int = 7) -> list[dict]:
     pts = []
     for row in u:
         p = {k: lo + x * (hi - lo) for x, (k, (lo, hi)) in zip(row, ((k, box[k]) for k in PARAMS))}
-        p["days"] = max(7, int(round(p["days"])))
+        p["days"] = max(7, round(p["days"]))
         pts.append(p)
     return pts

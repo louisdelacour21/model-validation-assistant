@@ -1,10 +1,8 @@
 """From test results to ranked findings, a deterministic opinion and the conditions of use."""
 import json
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from functools import wraps
 from pathlib import Path
-
-import numpy as np
 
 from .adapters.pricing import ql_analytic, sobol_points
 from .core import TestResult

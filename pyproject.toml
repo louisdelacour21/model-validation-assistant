@@ -13,7 +13,7 @@ dependencies = ["numpy", "scipy", "pandas", "pyyaml", "pydantic", "jinja2", "ris
 [project.optional-dependencies]
 pricing = ["QuantLib", "financepy"]
 data = ["yfinance"]
-dev = ["pytest", "hypothesis"]
+dev = ["pytest", "pytest-cov", "hypothesis", "ruff"]
 
 [project.scripts]
 valkit = "valkit.cli:main"
@@ -23,3 +23,13 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501", "E701", "E702", "E731", "B905"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/valkit/report.py" = ["E501"]

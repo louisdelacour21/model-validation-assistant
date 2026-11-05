@@ -2,6 +2,8 @@
 
 Python toolkit that runs a battery of validation tests on a pricing or risk model, with thresholds fixed before the run, and writes a deterministic `facts.json` per campaign.
 
+**Limits, up front:** the defects in the bench are written by the author (not blind); both campaigns are self-reviews (author = developer), not independent validations; some rules were changed after seeing results (see the bench section) before any `thresholds-v1` tag existed. To validate your own model, see [ADAPTING.md](ADAPTING.md).
+
 **Status: v0.1, steps 1–7 of the plan** (VaR and pricing checks, findings/opinion/`guard`, public planted-defect bench, HTML report, YAML registry). Not done: third-party blind defects (protocol in `defects/README.md`), expert-written commentary, the `thresholds-v1` tag on GitHub, the demo GIF. Published reports live in `docs/` (GitHub Pages); thresholds are listed in `THRESHOLDS.md`.
 
 ```bash
@@ -9,15 +11,15 @@ pip install -e .[dev]
 valkit fetch configs/riskhub_var_portfolio.yaml   # downloads prices, writes SHA-256 fingerprint (CSV is not redistributed)
 valkit run configs/riskhub_var_portfolio.yaml     # -> campaigns/<model>/<date>/facts.json
 valkit run configs/financepy_heston.yaml          # ~7 min on a 16 GB laptop
-pytest
+pytest --cov=valkit   # 28 tests, 82 % coverage
 ```
 
 | ID | Test |
 |---|---|
-| BT-01 | Kupiec POF, with power vs 2p and measured size |
+| BT-01 | Kupiec POF, with power vs 2p and measured size (exact binomial p reported as evidence; the asymptotic p sets the status) |
 | BT-02 | Christoffersen independence / conditional coverage, with power vs clusters |
 | BT-03 | Basel traffic light (+ multiplier add-on at N=250, 99 %) |
-| BT-04 | Acerbi–Székely Z2 for ES |
+| BT-04 | Acerbi–Székely Z2 for ES (null simulated under Gaussian and Student-t(4) tails; the larger p decides) |
 | BM-02 | VaR vs `numpy.quantile` |
 | BM-01 | Heston implied-vol error (bp) vs QuantLib analytic, and vs QuantLib Monte Carlo QE (outside its 99 % CI) |
 | CV-01 | Monte Carlo standard-error slope vs paths |
@@ -40,7 +42,7 @@ Each campaign also writes `report.html` (one-screen summary, then detail; prints
 
 ## Defect bench (`valkit bench`, ~12 min)
 
-Public taxonomy in `src/valkit/bench.py`: 6 VaR defects (40 seeds of iid Student-t data) and 7 pricing defects (12 seeds of Sobol test points), plus healthy models. *Flagged* = opinion is not "fit"; *rejected* = "not fit for use". 95 % Wilson intervals in `campaigns/bench/<date>/bench.json`.
+Public taxonomy in `src/valkit/bench.py`: 8 VaR defects (40 seeds of iid Student-t data) and 9 pricing defects (12 seeds of Sobol test points), plus healthy models. *Flagged* = opinion is not "fit"; *rejected* = "not fit for use". 95 % Wilson intervals in `campaigns/bench/<date>/bench.json`.
 
 First run (2026-11-05, before fixes): ES = VaR was flagged only 10/40 (the Z2 ES backtest has little power at 250 days), and the healthy VaR got an amber from some test in 9/40 runs. Two fixes, then a second run:
 - ES is backtested on the full out-of-sample, and a deterministic benchmark BM-03 (ES vs the mean of the k worst returns) was added.
@@ -48,4 +50,10 @@ First run (2026-11-05, before fixes): ES = VaR was flagged only 10/40 (the Z2 ES
 
 Second run: every VaR defect and every pricing defect is rejected (VaR 40/40, pricing 12/12); the healthy VaR is flagged 4/40 (95 % CI 4–23 %) and rejected 0/40; healthy FinancePy is flagged 0/12. The price of the corroboration rule: a real defect that only trips one p-value test would now go unflagged. BM-03 detects ES = VaR by construction (same convention as the model), not an ES that is wrong in a model-risk sense.
 
-Limits: defects are written by the author (not blind), pricing defects are large relative to the tolerances, 12 seeds give wide intervals, and the Z2 null assumes a Gaussian tail (an amber BT-04 on real fat-tailed data, as in the VaR campaign, may come from that shortcut).
+Third run (2026-11-05, after the latest changes): BT-04 now takes the larger p over two tail laws; the Kupiec exact p was added as evidence; four subtle defects were added (VaR ×0.95, a 20-day window, `v0` +1 %, `kappa` +10 %). Result: all 8 VaR defects rejected 40/40, all 9 pricing defects rejected 12/12, healthy VaR flagged 4/40 and healthy FinancePy 0/12. The subtle defects were caught more easily than I expected, which says the tolerances are tight and that the defects are not hard; it does not show the battery would catch a defect I did not think of.
+
+**Disclosure:** the BM-03 test, the corroboration rule and the two-null BT-04 were all introduced after looking at bench results, before the `thresholds-v1` tag. The bench is therefore tuned on its own defects; only the blind third-party defects (`defects/README.md`) can test that.
+
+Real-data results (self-review): FinancePy Heston is green on 7/7 tests; riskhub-engine historical VaR has one amber, BT-04 (p = 0.021 Gaussian null, 0.033 Student-t(4) null), listed as a finding but not corroborated, so the opinion stays "fit for use within the stated conditions".
+
+Limits: defects are written by the author (not blind), pricing defects are large relative to the tolerances, 12 seeds give wide intervals, and the Z2 null only covers two tail shapes (an amber BT-04 may still come from a third).

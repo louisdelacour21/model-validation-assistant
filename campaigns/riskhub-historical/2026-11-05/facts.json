@@ -3,6 +3,7 @@
   "evidence": {
    "LR": 0.09494012266443264,
    "N": 250,
+   "exact_binomial_p": 0.9136620533685497,
    "exceptions": 3,
    "expected": 2.500000000000002,
    "power_vs_2p": 0.241,
@@ -63,7 +64,11 @@
    "N": 2548,
    "Z2": 0.40060825050302906,
    "exceptions": 29,
-   "null": "Gaussian tail, 5000 draws"
+   "null": "max p over Gaussian and Student-t(4) tails, 5000 draws",
+   "p_by_null": {
+    "gaussian": 0.0212,
+    "t4": 0.0332
+   }
   },
   "id": "BT-04",
   "indicative": false,
@@ -75,7 +80,7 @@
    "amber_p": 0.05,
    "red_p": 0.01
   },
-  "value": 0.0212
+  "value": 0.0332
  },
  {
   "evidence": {

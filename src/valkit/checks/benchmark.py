@@ -1,8 +1,8 @@
 """BM-02 (VaR against an independent quantile) and RP-01 (reproducibility)."""
 import numpy as np
 
-from ..core import TestResult
 from ..adapters.base import RiskModel
+from ..core import TestResult
 
 
 def bm_var(model: RiskModel, returns: np.ndarray, n_windows: int = 250) -> TestResult:

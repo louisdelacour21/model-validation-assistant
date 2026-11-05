@@ -14,6 +14,7 @@ from .campaign import var_checks
 from .checks import pricing as pc
 from .findings import verdict
 
+
 def wilson(k: int, n: int, z: float = 1.96) -> tuple[float, float]:
     p = k / n
     d = 1 + z * z / n
@@ -44,13 +45,14 @@ class NoTail(RiskhubHistoricalVaR):            # ES reported equal to VaR
 
 
 class Short(RiskhubHistoricalVaR):             # 50-day window, still declares 99 %
-    def __init__(self): super().__init__(0.99, 50)
+    def __init__(self, w=50): super().__init__(0.99, w)
 
 
 VAR_DEFECTS = {
     "VD-01 understated x0.70": lambda: Scaled(0.70), "VD-02 understated x0.85": lambda: Scaled(0.85),
     "VD-03 confidence 95 % declared 99 %": WrongConf, "VD-04 frozen VaR": Static,
     "VD-05 ES equals VaR": NoTail, "VD-06 50-day window": Short,
+    "VD-07 understated x0.95 (subtle)": lambda: Scaled(0.95), "VD-08 20-day window (extreme)": lambda: Short(20),
 }
 
 
@@ -77,6 +79,7 @@ PRICING_DEFECTS = {
     "PD-03 v0 +5 %": _perturbed(v0=lambda x: x * 1.05), "PD-04 kappa x1.5": _perturbed(kappa=lambda x: x * 1.5),
     "PD-05 vol of vol +10 %": _perturbed(sigma=lambda x: x * 1.1), "PD-06 ACT/360 maturity": _perturbed(days=lambda x: round(x * 365 / 360)),
     "PD-07 strike shifted by 1 %": _perturbed(k=lambda x: x + 0.01),
+    "PD-08 v0 +1 % (subtle)": _perturbed(v0=lambda x: x * 1.01), "PD-09 kappa +10 % (subtle)": _perturbed(kappa=lambda x: x * 1.1),
 }
 
 

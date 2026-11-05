@@ -3,8 +3,16 @@ import numpy as np
 from riskhub_engine import model_risk
 from scipy.stats import ks_2samp
 
-from ..adapters.pricing import (DOMAIN, MKT, PARAMS, forward, implied_vol, ql_analytic, ql_mc_qe, sobol_points,
-                                strike)
+from ..adapters.pricing import (
+    DOMAIN,
+    MKT,
+    forward,
+    implied_vol,
+    ql_analytic,
+    ql_mc_qe,
+    sobol_points,
+    strike,
+)
 from ..core import TestResult
 
 
@@ -46,6 +54,10 @@ def cv_mc(n_runs=(4_000, 16_000, 64_000, 256_000), seed: int = 3) -> TestResult:
                       {"paths": list(n_runs), "se": se})
 
 
+def _fd(f, p, S, h):
+    return (f(p, S * (1 + h)) - f(p, S * (1 - h))) / (2 * S * h)
+
+
 def se_delta(model, n: int = 32, seed: int = 11, h_grid=(0.01, 0.001)) -> TestResult:
     """Finite-difference delta of the model vs the same on QuantLib, over a grid of bumps.
     FinancePy has no analytic Greeks, so the reference is QuantLib bumped identically."""
@@ -53,11 +65,11 @@ def se_delta(model, n: int = 32, seed: int = 11, h_grid=(0.01, 0.001)) -> TestRe
     worst = {h: 0.0 for h in h_grid}
     for p in sobol_points(n, seed=seed):
         for h in h_grid:
-            d = lambda f: (f(p, S * (1 + h)) - f(p, S * (1 - h))) / (2 * S * h)
-            dm, dq = d(lambda q, s: model.price(q, s)), d(ql_analytic)
+            dm, dq = _fd(model.price, p, S, h), _fd(ql_analytic, p, S, h)
             worst[h] = max(worst[h], abs(dm - dq) / max(abs(dq), 1e-8))
     w = max(worst.values())
-    return TestResult("SE-01", "Delta (central FD) vs QuantLib", w, "green" if w < 0.01 else "amber" if w < 0.05 else "red",
+    status = "green" if w < 0.01 else "amber" if w < 0.05 else "red"
+    return TestResult("SE-01", "Delta (central FD) vs QuantLib", w, status,
                       {"green_lt": 0.01, "amber_lt": 0.05}, None, seed,
                       {"max_rel_err_by_bump": {str(h): v for h, v in worst.items()}, "points": n})
 
@@ -87,7 +99,7 @@ def st_stress(model) -> TestResult:
             err = _iv_err_bp(model, p)
             cases[name] = {"finite_and_in_bounds": _no_arb(px, p), "iv_err_bp": err,
                            "in_domain": all(DOMAIN[k][0] <= p[k] <= DOMAIN[k][1] for k in DOMAIN)}
-        except Exception as e:  # a crash is a result, not a harness failure
+        except Exception as e:  # noqa: BLE001  # a crash is a result, not a harness failure
             cases[name] = {"finite_and_in_bounds": False, "iv_err_bp": float("nan"), "error": repr(e)[:120],
                            "in_domain": False}
     bad = [n for n, c in cases.items() if c["in_domain"] and (not c["finite_and_in_bounds"] or not c["iv_err_bp"] < 25)]
