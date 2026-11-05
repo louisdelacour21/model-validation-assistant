@@ -1,0 +1,134 @@
+{
+ "results": {
+  "P07": {
+   "opinion": "not fit for use",
+   "verdict": 2,
+   "status": {
+    "BM-01": "red",
+    "CV-01": "green",
+    "SE-01": "red",
+    "ST-01": "green",
+    "LU-01": "red",
+    "DR-01": "green"
+   }
+  },
+  "P08": {
+   "opinion": "not fit for use",
+   "verdict": 2,
+   "status": {
+    "BM-01": "red",
+    "CV-01": "green",
+    "SE-01": "red",
+    "ST-01": "green",
+    "LU-01": "red",
+    "DR-01": "green"
+   }
+  },
+  "P09": {
+   "opinion": "not fit for use",
+   "verdict": 2,
+   "status": {
+    "BM-01": "red",
+    "CV-01": "green",
+    "SE-01": "red",
+    "ST-01": "green",
+    "LU-01": "red",
+    "DR-01": "green"
+   }
+  },
+  "P10": {
+   "opinion": "fit for use within the stated conditions",
+   "verdict": 0,
+   "status": {
+    "BM-01": "green",
+    "CV-01": "green",
+    "SE-01": "green",
+    "ST-01": "green",
+    "LU-01": "green",
+    "DR-01": "green"
+   }
+  },
+  "P11": {
+   "opinion": "fit for use within the stated conditions",
+   "verdict": 0,
+   "status": {
+    "BM-01": "green",
+    "CV-01": "green",
+    "SE-01": "green",
+    "ST-01": "green",
+    "LU-01": "green",
+    "DR-01": "green"
+   }
+  },
+  "P12": {
+   "opinion": "not fit for use",
+   "verdict": 2,
+   "status": {
+    "BM-01": "red",
+    "CV-01": "green",
+    "SE-01": "red",
+    "ST-01": "green",
+    "LU-01": "red",
+    "DR-01": "green"
+   }
+  },
+  "P13": {
+   "opinion": "fit for use within the stated conditions",
+   "verdict": 0,
+   "status": {
+    "BM-01": "green",
+    "CV-01": "green",
+    "SE-01": "green",
+    "ST-01": "green",
+    "LU-01": "green",
+    "DR-01": "green"
+   }
+  },
+  "P14": {
+   "opinion": "not fit for use",
+   "verdict": 2,
+   "status": {
+    "BM-01": "red",
+    "CV-01": "green",
+    "SE-01": "red",
+    "ST-01": "green",
+    "LU-01": "red",
+    "DR-01": "green"
+   }
+  }
+ },
+ "answers": {
+  "P07": {
+   "truth": "defective",
+   "defect": "Feller-violating variance floor clipping v0 to at least 0.04"
+  },
+  "P08": {
+   "truth": "defective",
+   "defect": "wrong_cf_branch_little_trap_swapped"
+  },
+  "P09": {
+   "truth": "defective",
+   "defect": "discount with r only wrong sign (exp(+rT))"
+  },
+  "P10": {
+   "truth": "healthy",
+   "defect": null
+  },
+  "P11": {
+   "truth": "healthy",
+   "defect": null
+  },
+  "P12": {
+   "truth": "defective",
+   "defect": "coarse_grid"
+  },
+  "P13": {
+   "truth": "healthy",
+   "defect": null
+  },
+  "P14": {
+   "truth": "defective",
+   "defect": "no_discount_r"
+  }
+ }
+}

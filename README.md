@@ -112,3 +112,20 @@ Six sub-agents each wrote an independent Heston call pricer (numpy/scipy only) a
 - The first column is the unchanged battery, and it also rejected both healthy models. Cause: my brief did not say the strike stays fixed when the spot is bumped, so the authors re-derived the strike from the bumped spot and the finite-difference delta came out wrong (about 0.18 vs 0.76). SE-01 flagged that correctly; the flaw is in the brief, not the pricing.
 - The second column is a post-hoc re-run through a thin wrapper that keeps the strike fixed (`k' = k + ln(100/spot)`), chosen after seeing the first column (`blind/pricing/run_fixed_strike.py`). Report both: specificity is 0/2 false alarms only under the corrected reading.
 - Caveats: only two healthy models, all authors are the same model family and picked similar Lewis / Gil-Pelaez integrals, so the specificity estimate is weak.
+
+## Blind pricing run 2 (`blind/pricing/P07`-`P14`, thresholds `thresholds-v2`, fixed-strike brief)
+
+Same protocol, with the brief corrected (strike stays fixed under a spot bump) and the battery run unchanged, no wrapper. Rule (`WAVE3-RULE.md`), brief and sealed hashes (`HASHES3.txt`) were committed before the run (`4da6daf`); answers were read only after the raw results were saved, and all hashes verified.
+
+| Model | Truth | Verdict |
+|---|---|---|
+| P07 | defective: variance floor clips v0 up to 0.04 | not fit (BM-01, SE-01, LU-01 red) |
+| P08 | defective: little-trap branch swapped | not fit |
+| P09 | defective: discount factor exp(+rT) | not fit |
+| P12 | defective: coarse integration grid | not fit |
+| P14 | defective: no discounting | not fit |
+| P10, P11, P13 | healthy | **fit**, all six checks green |
+
+- Detection 5/5 (Wilson 95 % CI 57-100 %), false alarms 0/3 (CI 0-56 %).
+- Together with run 1 under the fixed-strike reading: 9/9 defects rejected, 0/5 healthy models rejected. The first run's SE-01 failure was the brief, not the battery.
+- Limits: small n; all authors are one model family; the defects drawn were mostly large, so subtle ones (cf. P04-P06) remain the better test of power.
