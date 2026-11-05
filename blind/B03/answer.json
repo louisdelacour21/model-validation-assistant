@@ -1,0 +1,1 @@
+{"id":"B03","defective":true,"family":"confidence mismatch","difficulty":"obvious","description":"The tail probability is hard-coded to 5 % so VaR and ES are computed at the 95 % level instead of the declared 99 %, giving figures far too small."}

@@ -1,0 +1,1 @@
+{"id":"B07","defective":false,"family":"none","difficulty":"none","description":"Correct historical simulation: VaR is the linearly interpolated 99% quantile of losses over the 500-day window, ES is the mean of losses at or beyond VaR."}

@@ -1,0 +1,1 @@
+{"id":"B06","defective":true,"family":"truncated lookback window","difficulty":"moderate","description":"VaR and ES are estimated on only the last 250 returns instead of the declared 500-day window, so the 99% tail rests on about 2-3 observations and the estimate is noisy and slow to reflect older stress, leading to under-coverage in calm regimes after turbulence."}

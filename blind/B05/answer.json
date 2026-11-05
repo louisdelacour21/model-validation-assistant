@@ -1,0 +1,1 @@
+{"id":"B05","defective":true,"family":"ES tail trimming","difficulty":"subtle","description":"VaR is a correct linear-interpolated 99% quantile, but ES averages the sorted tail losses after dropping the single worst loss (slice starts at index 1) and is floored at VaR, so ES is understated, most when the worst loss is extreme."}
