@@ -7,7 +7,7 @@ Python toolkit that runs a battery of validation tests on a pricing or risk mode
 **Status: v0.1, steps 1–7 of the plan** (VaR and pricing checks, findings/opinion/`guard`, public planted-defect bench, HTML report, YAML registry). Not done: third-party blind defects (protocol in `defects/README.md`), expert-written commentary, the `thresholds-v1` tag on GitHub, the demo GIF. Published reports live in `docs/` (GitHub Pages); thresholds are listed in `THRESHOLDS.md`.
 
 ```bash
-pip install -e .[dev]
+pip install -e ".[dev,pricing]"
 valkit fetch configs/riskhub_var_portfolio.yaml   # downloads prices, writes SHA-256 fingerprint (CSV is not redistributed)
 valkit run configs/riskhub_var_portfolio.yaml     # -> campaigns/<model>/<date>/facts.json
 valkit run configs/financepy_heston.yaml          # ~7 min on a 16 GB laptop
