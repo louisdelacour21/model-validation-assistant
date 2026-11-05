@@ -21,3 +21,8 @@ Honest caveat: the defect bench was run and two rules were changed (BM-03 added,
 | ST-01 | Stress of parameters | `{"green": "0 violation inside the domain"}` |
 
 Opinion rule (`valkit.findings.verdict`): worst status decides; red from an indicative test (power < 0.5) counts as amber; a lone amber from BT-01/02/04 with nothing else non-green does not change the opinion.
+
+
+## v2 (after blind run 1)
+
+BM-02 accepts either standard quantile convention (inverted_cdf or linear interpolation; per window the closer counts). Tolerances are unchanged. Tag `thresholds-v2` is set before blind run 2.

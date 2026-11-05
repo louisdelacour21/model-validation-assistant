@@ -6,8 +6,9 @@ from ..core import TestResult
 
 
 def bm_var(model: RiskModel, returns: np.ndarray, n_windows: int = 250) -> TestResult:
-    """Model VaR vs numpy.quantile on the same windows. inverted_cdf is the historical-order-statistic
-    convention; the linear-interpolation gap is reported as an observation, not a finding."""
+    """Model VaR vs numpy.quantile on the same windows. Both standard conventions are accepted (historical order
+    statistic = inverted_cdf, or linear interpolation): per window the closer one counts. Blind run 1 showed that
+    insisting on inverted_cdf rejected every correct model written with linear interpolation."""
     W, q = model.window, round(1 - model.conf, 12)  # 1 - 0.99 = 0.010000000000000009 would pick the 6th of 500, not the 5th
     ts = range(len(returns) - n_windows, len(returns))
     rel, rel_lin = [], []
@@ -17,12 +18,13 @@ def bm_var(model: RiskModel, returns: np.ndarray, n_windows: int = 250) -> TestR
         ref = -np.quantile(h, q, method="inverted_cdf")
         rel.append(abs(v - ref) / ref)
         rel_lin.append(abs(v + np.quantile(h, q)) / (-np.quantile(h, q)))
-    worst = float(max(rel))
+    worst = float(max(min(a, b) for a, b in zip(rel, rel_lin)))
     status = "green" if worst < 1e-3 else "amber" if worst < 2e-2 else "red"
     return TestResult("BM-02", "VaR vs numpy.quantile", worst, status,
                       {"green_lt": 1e-3, "amber_lt": 2e-2},
-                      evidence={"windows": n_windows, "convention": "inverted_cdf",
-                                "observation_gap_vs_linear_interp": float(max(rel_lin))})
+                      evidence={"windows": n_windows, "convention": "closer of inverted_cdf and linear",
+                                "worst_gap_inverted_cdf": float(max(rel)),
+                                "worst_gap_linear": float(max(rel_lin))})
 
 
 def bm_es(model: RiskModel, returns: np.ndarray, n_windows: int = 250) -> TestResult:
