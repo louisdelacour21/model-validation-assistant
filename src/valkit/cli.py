@@ -19,7 +19,7 @@ def main(argv=None):
         print(run_bench(Path("campaigns")))
         return
     cfg = yaml.safe_load(Path(a.config).read_text(encoding="utf-8"))
-    if cfg["model"] in ("financepy-heston",):
+    if cfg["model"] in ("financepy-heston", "neural-heston"):
         print(run_pricing_campaign(cfg, Path("campaigns")) / "facts.json")
         return
     d = cfg["data"]

@@ -6,6 +6,7 @@ from pathlib import Path
 import numpy as np
 
 from .adapters.base import RiskModel, rolling_forecasts
+from .adapters.neural_heston import NeuralHeston
 from .adapters.pricing import PARAMS, FinancePyHeston, sobol_points
 from .adapters.riskhub_var import RiskhubHistoricalVaR
 from .checks import backtesting as bt
@@ -42,17 +43,17 @@ def run_var_campaign(cfg: dict, returns: np.ndarray, out_root: Path) -> Path:
     return out
 
 
-PRICERS = {"financepy-heston": FinancePyHeston}
+PRICERS = {"financepy-heston": FinancePyHeston, "neural-heston": NeuralHeston}
 
 
 def pricing_checks(model, usage_box: dict | None = None):
-    usage = sobol_points(200, {k: tuple(v) for k, v in usage_box.items()} if usage_box else None, seed=1)
+    usage = sobol_points(200, {k: tuple(v) for k, v in usage_box.items()} if usage_box else model.domain, seed=1)
     return [pc.bm_pricing(model), pc.cv_mc(), pc.se_delta(model), pc.st_stress(model), pc.lu_limits(model),
-            pc.dr_drift({k: [p[k] for p in usage] for k in PARAMS})]
+            pc.dr_drift({k: [p[k] for p in usage] for k in PARAMS}, model.domain)]
 
 
 def run_pricing_campaign(cfg: dict, out_root: Path) -> Path:
-    model = PRICERS[cfg["model"]]()
+    model = PRICERS[cfg["model"]](**cfg.get("params", {}))
     facts = lambda: facts_json(pricing_checks(model, cfg.get("usage_box")))
     results = pricing_checks(model, cfg.get("usage_box")) + [rp_reproducibility(facts)]
     out = out_root / model.name / date.today().isoformat()

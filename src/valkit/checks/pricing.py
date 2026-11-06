@@ -16,6 +16,10 @@ from ..adapters.pricing import (
 from ..core import TestResult
 
 
+def _box(model):
+    return getattr(model, "domain", DOMAIN)
+
+
 def _iv_err_bp(model, p, ref=ql_analytic):
     a, b = implied_vol(model.price(p), p), implied_vol(ref(p), p)
     return abs(a - b) * 1e4 if not (np.isnan(a) or np.isnan(b)) else float("nan")
@@ -27,7 +31,7 @@ def _grade(mean, p99, g=(1, 10), a=(3, 25)):
 
 def bm_pricing(model, n: int = 128, n_mc: int = 16, mc_paths: int = 100_000, seed: int = 7) -> TestResult:
     """Implied-vol error vs QuantLib analytic; gap vs Monte Carlo QE is kept only outside its 99 % CI."""
-    pts = sobol_points(n, seed=seed)
+    pts = sobol_points(n, _box(model), seed=seed)
     errs = np.array([_iv_err_bp(model, p) for p in pts])
     ok = errs[~np.isnan(errs)]
     outside = 0
@@ -63,7 +67,7 @@ def se_delta(model, n: int = 32, seed: int = 11, h_grid=(0.01, 0.001)) -> TestRe
     FinancePy has no analytic Greeks, so the reference is QuantLib bumped identically."""
     S = MKT["S"]
     worst = {h: 0.0 for h in h_grid}
-    for p in sobol_points(n, seed=seed):
+    for p in sobol_points(n, _box(model), seed=seed):
         for h in h_grid:
             dm, dq = _fd(model.price, p, S, h), _fd(ql_analytic, p, S, h)
             worst[h] = max(worst[h], abs(dm - dq) / max(abs(dq), 1e-8))
@@ -90,6 +94,7 @@ STRESS = {
 def st_stress(model) -> TestResult:
     """Extreme parameters: price finite, inside no-arbitrage bounds, close to QuantLib. Reported per case;
     the status only counts cases inside the declared domain (a failure outside it is a limit of use)."""
+    DOMAIN = _box(model)
     base = {k: 0.5 * sum(v) for k, v in DOMAIN.items()}
     cases = {}
     for name, ov in STRESS.items():
@@ -112,7 +117,7 @@ def lu_limits(model, scales=(0.5, 1.0, 1.5, 2.0), n: int = 64, tol_p99_bp: float
     out = {}
     for s in scales:
         box = {}
-        for k, (lo, hi) in DOMAIN.items():
+        for k, (lo, hi) in _box(model).items():
             c, w = 0.5 * (lo + hi), 0.5 * (hi - lo) * s
             box[k] = (max(c - w, 7) if k == "days" else c - w, c + w)
         box["kappa"] = (max(box["kappa"][0], 0.05), box["kappa"][1])
@@ -130,9 +135,9 @@ def lu_limits(model, scales=(0.5, 1.0, 1.5, 2.0), n: int = 64, tol_p99_bp: float
                       {"p99_bp_by_scale": {str(k): v for k, v in out.items()}, "validated_scale": best})
 
 
-def dr_drift(usage: dict[str, list[float]], n_ref: int = 512, seed: int = 9) -> TestResult:
+def dr_drift(usage: dict[str, list[float]], box: dict | None = None, n_ref: int = 512, seed: int = 9) -> TestResult:
     """PSI and KS between the inputs actually used and the declared domain (uniform reference)."""
-    ref = sobol_points(n_ref, seed=seed)
+    ref = sobol_points(n_ref, box, seed=seed)
     psi, ks = {}, {}
     for k, cur in usage.items():
         r = [p[k] for p in ref]

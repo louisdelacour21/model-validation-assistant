@@ -1,0 +1,6 @@
+model: neural-heston
+# Pre-registered before the run: the declared domain is the rectangle inscribed in the network's own training box
+# (see adapters/neural_heston.py), the checkpoint is models/dml.pt (256 x 5, differential ML), thresholds-v2 unchanged.
+params:
+  path: ../Pricer neuronal
+  checkpoint: models/dml.pt
