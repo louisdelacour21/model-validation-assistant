@@ -60,7 +60,7 @@ def run_pricing_campaign(cfg: dict, out_root: Path) -> Path:
     out.mkdir(parents=True, exist_ok=True)
     (out / "facts.json").write_text(facts_json(results), encoding="utf-8")
     _write_findings(model, results, out, book_gap(model) if any(r.status != 'green' for r in results) else None,
-                    'pricing', 'independent')
+                    'pricing', cfg.get('independence', 'independent'))
     return out
 
 

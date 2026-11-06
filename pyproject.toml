@@ -13,6 +13,7 @@ dependencies = ["numpy", "scipy", "pandas", "pyyaml", "pydantic", "jinja2", "ris
 [project.optional-dependencies]
 pricing = ["QuantLib", "financepy"]
 data = ["yfinance"]
+neural = ["torch"]
 dev = ["pytest", "pytest-cov", "hypothesis", "ruff"]
 
 [project.scripts]

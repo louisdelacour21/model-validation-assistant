@@ -129,3 +129,24 @@ Same protocol, with the brief corrected (strike stays fixed under a spot bump) a
 - Detection 5/5 (Wilson 95 % CI 57-100 %), false alarms 0/3 (CI 0-56 %).
 - Together with run 1 under the fixed-strike reading: 9/9 defects rejected, 0/5 healthy models rejected. The first run's SE-01 failure was the brief, not the battery.
 - Limits: small n; all authors are one model family; the defects drawn were mostly large, so subtle ones (cf. P04-P06) remain the better test of power.
+
+## Neural Heston campaign
+
+The [Neural Heston pricer](https://github.com/louisdelacour21/Neural-heston) (MLP = Black price + learned correction, differential ML, `models/dml.pt`) went through the unchanged pricing battery (`thresholds-v2`, `configs/neural_heston.yaml`, adapter `adapters/neural_heston.py`, [report](docs/neural-heston.html)). Config and adapter were committed before the run (`b8309dd`).
+
+| Test | Value | Status |
+| --- | --- | --- |
+| BM-01 IV error vs QuantLib (mean / p99 / max) | 0.34 / 1.1 / 4.4 bp; 0/16 outside the MC QE 99 % CI | green |
+| SE-01 delta (finite difference) vs QuantLib | 0.18 % worst relative error | green |
+| ST-01 stress | no violation inside the domain | green |
+| LU-01 largest box under 10 bp p99 | 1.0x the declared domain (p99 1.3 bp at 1x, 11 bp at 1.5x, 43 bp at 2x) | green |
+| DR-01 / RP-01 | no drift (PSI 0.004) / reproducible | green |
+
+Opinion: **fit for use within the stated conditions**, i.e. inside the declared domain (rectangle inscribed in the network's own training box: k in [-0.22, 0.14], 30-730 days, v0, theta in [0.01, 0.10], kappa [0.5, 4], sigma [0.1, 0.8], rho [-0.9, -0.1]).
+
+Limits, stated plainly:
+- **Self-review**: the same author wrote the pricer and this toolkit. The references (QuantLib analytic and QE Monte Carlo) are third-party, but the verdict is not an independent validation.
+- The domain is the model's own claim; the standard `valkit` domain (k up to +0.3) would sit partly outside it at short maturities and was not used. Outside the domain the error grows quickly (LU-01), as the pricer's own report says.
+- ST-01 stress cases (rho = +0.95, Feller violated, one week, wings) are all outside the domain, so they are reported but not counted; rho = +0.95 gives 28 bp.
+- The prices are floored at intrinsic value, as the pricer documents (0.13 % of raw outputs are negative).
+- 128 points for BM-01 and 32 for SE-01: small samples, one checkpoint, one seed of the training.

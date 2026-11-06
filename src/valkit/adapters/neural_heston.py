@@ -2,10 +2,10 @@
 call prices C(k, T), with the price floored at intrinsic value as the model's own documentation prescribes.
 Needs torch and a local checkout of the pricer: set `path` (checkout) and `checkpoint` in the campaign config."""
 import sys
-from math import exp, log, sqrt
+from math import exp, log
 from pathlib import Path
 
-from .pricing import MKT, forward, strike
+from .pricing import MKT, strike
 
 # Rectangle inscribed in the network's claimed training box (x = k / sqrt(T) in [-0.8, 0.5], T in [0.05, 2] years):
 # at the shortest maturity (30 days) that is k in [-0.229, 0.143]. Rounded inward.

@@ -5,6 +5,13 @@
   campaign_date: '2026-11-05'
   campaign_dir: campaigns/financepy-heston/2026-11-05
   open_findings: []
+- name: neural-heston
+  kind: pricing
+  independence: self-review
+  opinion: fit for use within the stated conditions
+  campaign_date: '2026-11-06'
+  campaign_dir: campaigns/neural-heston/2026-11-06
+  open_findings: []
 - name: riskhub-historical
   kind: var
   independence: self-review

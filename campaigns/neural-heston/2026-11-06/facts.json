@@ -1,0 +1,196 @@
+[
+ {
+  "evidence": {
+   "excluded_not_invertible": 0,
+   "max_bp": 4.361717374249119,
+   "mc_paths": 100000,
+   "mc_points": 16,
+   "mean_bp": 0.3397080635175612,
+   "outside_mc_ci99": 0,
+   "p99_bp": 1.1449043993923718,
+   "points": 128,
+   "worst_point": {
+    "days": 45,
+    "k": -0.20407829731702803,
+    "kappa": 1.1878031860105693,
+    "rho": -0.5676568955183029,
+    "sigma": 0.2989808578975499,
+    "theta": 0.05408462149091066,
+    "v0": 0.03497359517961741
+   }
+  },
+  "id": "BM-01",
+  "indicative": false,
+  "name": "IV error vs QuantLib analytic + MC QE (bp)",
+  "power": null,
+  "seed": 7,
+  "status": "green",
+  "threshold": {
+   "amber": "mean<3 and p99<25",
+   "green": "mean<1 and p99<10"
+  },
+  "value": 0.3397080635175612
+ },
+ {
+  "evidence": {
+   "paths": [
+    4000,
+    16000,
+    64000,
+    256000
+   ],
+   "se": [
+    0.09312227197536649,
+    0.046852064842536206,
+    0.023206440560037973,
+    0.01166374282271159
+   ]
+  },
+  "id": "CV-01",
+  "indicative": false,
+  "name": "MC standard-error slope vs paths",
+  "power": null,
+  "seed": 3,
+  "status": "green",
+  "threshold": {
+   "amber": "[-0.7,-0.3]",
+   "green": "[-0.6,-0.4]"
+  },
+  "value": -0.5002436850850568
+ },
+ {
+  "evidence": {
+   "max_rel_err_by_bump": {
+    "0.001": 0.0018309196980855977,
+    "0.01": 0.0016736837239928993
+   },
+   "points": 32
+  },
+  "id": "SE-01",
+  "indicative": false,
+  "name": "Delta (central FD) vs QuantLib",
+  "power": null,
+  "seed": 11,
+  "status": "green",
+  "threshold": {
+   "amber_lt": 0.05,
+   "green_lt": 0.01
+  },
+  "value": 0.0018309196980855977
+ },
+ {
+  "evidence": {
+   "cases": {
+    "feller_violated": {
+     "finite_and_in_bounds": true,
+     "in_domain": false,
+     "iv_err_bp": 3.8052614856437517
+    },
+    "one_week": {
+     "finite_and_in_bounds": true,
+     "in_domain": false,
+     "iv_err_bp": 3.793201959041703
+    },
+    "rho_minus_0.95": {
+     "finite_and_in_bounds": true,
+     "in_domain": false,
+     "iv_err_bp": 0.2803690133876269
+    },
+    "rho_plus_0.95": {
+     "finite_and_in_bounds": true,
+     "in_domain": false,
+     "iv_err_bp": 28.33091829849338
+    },
+    "wing_down": {
+     "finite_and_in_bounds": true,
+     "in_domain": false,
+     "iv_err_bp": 0.4780075977717235
+    },
+    "wing_up": {
+     "finite_and_in_bounds": true,
+     "in_domain": false,
+     "iv_err_bp": 1.9420189763838525
+    }
+   },
+   "violations": []
+  },
+  "id": "ST-01",
+  "indicative": false,
+  "name": "Stress of parameters",
+  "power": null,
+  "seed": null,
+  "status": "green",
+  "threshold": {
+   "green": "0 violation inside the domain"
+  },
+  "value": 0.0
+ },
+ {
+  "evidence": {
+   "p99_bp_by_scale": {
+    "0.5": 0.6870014856725891,
+    "1.0": 1.2939067058864582,
+    "1.5": 11.023613952674681,
+    "2.0": 43.004011812630765
+   },
+   "validated_scale": 1.0
+  },
+  "id": "LU-01",
+  "indicative": false,
+  "name": "Largest scaled box with p99 IV error under tolerance",
+  "power": null,
+  "seed": 5,
+  "status": "green",
+  "threshold": {
+   "green": "declared domain (scale 1) within tolerance",
+   "tol_p99_bp": 10
+  },
+  "value": 1.0
+ },
+ {
+  "evidence": {
+   "ks": {
+    "days": 0.009609375,
+    "k": 0.0096875,
+    "kappa": 0.00984375,
+    "rho": 0.0109375,
+    "sigma": 0.00984375,
+    "theta": 0.0115625,
+    "v0": 0.0109375
+   },
+   "psi": {
+    "days": 0.00426707919304615,
+    "k": 0.0028699578568901697,
+    "kappa": 0.0018660558297983495,
+    "rho": 0.0016736721111194207,
+    "sigma": 0.001906204969769085,
+    "theta": 0.002182568514524302,
+    "v0": 0.0010595605333903603
+   }
+  },
+  "id": "DR-01",
+  "indicative": false,
+  "name": "Input drift vs declared domain (PSI)",
+  "power": null,
+  "seed": 9,
+  "status": "green",
+  "threshold": {
+   "amber_lt": 0.25,
+   "green_lt": 0.1
+  },
+  "value": 0.00426707919304615
+ },
+ {
+  "evidence": {},
+  "id": "RP-01",
+  "indicative": false,
+  "name": "Two runs give identical facts",
+  "power": null,
+  "seed": null,
+  "status": "green",
+  "threshold": {
+   "identical": true
+  },
+  "value": 1.0
+ }
+]

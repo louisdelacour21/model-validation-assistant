@@ -4,3 +4,5 @@ model: neural-heston
 params:
   path: ../Pricer neuronal
   checkpoint: models/dml.pt
+# Same author wrote the pricer and this toolkit: a self-review, although the references (QuantLib, QuantLib MC QE) are third-party.
+independence: self-review
